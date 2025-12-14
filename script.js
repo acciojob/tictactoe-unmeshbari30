@@ -1,8 +1,7 @@
-//your JS code here. If required.
 let player1 = "";
 let player2 = "";
 let currentPlayer = "";
-let currentSymbol = "X";
+let currentSymbol = "x";
 let gameActive = true;
 
 let boardState = ["", "", "", "", "", "", "", "", ""];
@@ -14,31 +13,30 @@ const winPatterns = [
 ];
 
 document.getElementById("submit").addEventListener("click", function () {
-  player1 = document.getElementById("player-1").value;
-  player2 = document.getElementById("player-2").value;
-
-  if (player1 === "" || player2 === "") {
-    alert("Enter both player names");
-    return;
-  }
+  player1 = document.getElementById("player1").value;
+  player2 = document.getElementById("player2").value;
 
   currentPlayer = player1;
+
   document.getElementById("game").style.display = "block";
-  document.querySelector(".message").textContent = currentPlayer + ", you're up";
+  document.querySelector(".message").textContent =
+    currentPlayer + ", you're up";
 
   createBoard();
 });
 
 function createBoard() {
   let board = document.querySelector(".board");
+  board.innerHTML = "";
 
   for (let i = 0; i < 9; i++) {
-    let cell = document.createElement("button");
-    cell.className = "cell";
+    let cell = document.createElement("div");
     cell.id = (i + 1).toString();
+
     cell.addEventListener("click", function () {
       handleMove(i, cell);
     });
+
     board.appendChild(cell);
   }
 }
@@ -62,11 +60,11 @@ function handleMove(index, cell) {
 }
 
 function switchPlayer() {
-  if (currentSymbol === "X") {
-    currentSymbol = "O";
+  if (currentSymbol === "x") {
+    currentSymbol = "o";
     currentPlayer = player2;
   } else {
-    currentSymbol = "X";
+    currentSymbol = "x";
     currentPlayer = player1;
   }
 
@@ -75,7 +73,7 @@ function switchPlayer() {
 }
 
 function checkWin() {
-  return winPatterns.some(pattern => {
-    return pattern.every(index => boardState[index] === currentSymbol);
-  });
+  return winPatterns.some(pattern =>
+    pattern.every(i => boardState[i] === currentSymbol)
+  );
 }
